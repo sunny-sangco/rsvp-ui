@@ -6,7 +6,7 @@ import { Observable } from "rxjs";
   providedIn: 'root'
 })
 export class SharedService {
-  readonly APIUrl = "https://rsvp-ui-exam.herokuapp.com/api";
+  readonly APIUrl = "https://rsvp-be-exam.herokuapp.com/api";
   constructor(private http: HttpClient) {}
   getRsvpList(): Observable < any[] > {
       return this.http.get < any > (this.APIUrl + '/rsvp');
