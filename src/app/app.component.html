@@ -1,0 +1,172 @@
+<div class="card">
+  <div class="card-header">
+    <h3 *ngIf="isAddMode">Add RSVP</h3>
+    <h3 *ngIf="!isAddMode">View RSVP</h3>
+  </div>
+  <div class="card-body">
+    <div class="rsvp-form">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="row mb-3">
+          <label for="name" class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              formControlName="Name"
+              [ngClass]="{ 'is-invalid': submitted && f['Name'].errors }"
+            />
+            <div *ngIf="submitted && f['Name'].errors" class="invalid-feedback">
+              <div *ngIf="f['Name'].errors['required']">Name is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="email" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              formControlName="Email"
+              [ngClass]="{ 'is-invalid': submitted && f['Email'].errors }"
+            />
+            <div
+              *ngIf="submitted && f['Email'].errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f['Email'].errors['required']">Email is required</div>
+            </div>
+            <div
+              *ngIf="submitted && f['Email'].errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f['Email'].errors['email']">Invalid Email</div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="contactNumber" class="col-sm-2 col-form-label"
+            >Contact Number</label
+          >
+          <div class="col-sm-10">
+            <input
+              pattern="((\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?)?\d{3}[\s.-]?\d{4}"
+              type="tel"
+              class="form-control"
+              id="contactNumber"
+              formControlName="ContactNumber"
+              [ngClass]="{
+                'is-invalid': submitted && f['ContactNumber'].errors
+              }"
+            />
+            <div
+              *ngIf="submitted && f['ContactNumber'].errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f['ContactNumber'].errors['required']">
+                Contact number is required
+              </div>
+            </div>
+            <div
+            *ngIf="submitted && f['ContactNumber'].errors"
+           
+            >
+              <div *ngIf="f['ContactNumber'].errors['ContactNumber']">
+                Invalid contact number
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="attending" class="col-sm-2 col-form-label"
+            >Attending?</label
+          >
+          <div class="col-sm-10" id="checkboxContainer">
+            <ng-container *ngFor="let item of checklist">
+              <span>&nbsp;</span> 
+              <span>&nbsp;</span> 
+              <span>&nbsp;</span>
+              <span>&nbsp;</span>
+              <span>&nbsp;</span>
+              <label
+                ><input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="attending"
+                  value="{{ item.id }}"
+                  [checked]="item.isSelected"
+                  (change)="responseSelected(item)"
+                  formControlName="Attending"
+                  [ngClass]="{
+                    'is-invalid': submitted && f['Attending'].errors
+                  }"
+                />{{ item.value }}</label
+              >
+              <span>&nbsp;</span> <span>&nbsp;</span>
+            </ng-container>
+            <div
+              *ngIf="submitted && f['Attending'].errors"
+              style="color: #dc3545"
+            >
+              <div *ngIf="f['Attending'].errors['required']">
+                Your response is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn-outline-dark" *ngIf="isAddMode">
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+          Submit Response
+        </button>
+        <button
+          type="button"
+          class="btn-outline-dark"
+          (click)="onCancel()"
+          *ngIf="!isAddMode"
+        >
+          Cancel
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h3>RSVP List</h3>
+  </div>
+  <div class="card-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Contact Number</th>
+          <th>Response</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dataItem of rsvpList">
+          <td>{{ dataItem.Name }}</td>
+          <td>{{ dataItem.Email }}</td>
+          <td>{{ dataItem.ContactNumber }}</td>
+          <td>{{ dataItem.Attending == true ? "Attending" : "Decline" }}</td>
+          <td>
+            <button
+              type="button"
+              class="btn-outline-dark"
+              (click)="viewRsvp(dataItem)"
+            >
+              View
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
