@@ -51,33 +51,12 @@
               >Contact Number</label
             >
             <div class="col-sm-10">
-              <input
-                pattern="((\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?)?\d{3}[\s.-]?\d{4}"
-                type="tel"
-                class="form-control"
-                id="contactNumber"
-                formControlName="ContactNumber"
-                [ngClass]="{
-                  'is-invalid': submitted && f['ContactNumber'].errors
-                }"
-              />
-              <div
-                *ngIf="submitted && f['ContactNumber'].errors"
-                class="invalid-feedback"
-              >
-                <div *ngIf="f['ContactNumber'].errors['required']">
-                  Contact number is required
-                </div>
-              </div>
-              <div
-              *ngIf="submitted && f['ContactNumber'].errors"
-             
-              >
-                <div *ngIf="f['ContactNumber'].errors['ContactNumber']">
-                  Invalid contact number
-                </div>
-              </div>
+              <input (keypress)="keyPress($event)" required type="text" formControlName="ContactNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['ContactNumber'].errors }">
+              <div *ngIf="submitted && f['ContactNumber'].errors" class="invalid-feedback">
+              <div *ngIf="f['ContactNumber'].errors['required']">Contact number is required</div>
+              <div *ngIf="f['ContactNumber'].errors['pattern'] || f['ContactNumber'].errors['pattern'] || f['ContactNumber'].errors['minlength']">Contact number must be at least 10 numbers</div>
             </div>
+          </div>
           </div>
           <div class="row mb-3">
             <label for="attending" class="col-sm-2 col-form-label"

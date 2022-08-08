@@ -42,12 +42,15 @@ export class AppComponent {
           Id: new FormControl(null),
           Name: ['', Validators.required],
           Email: ['', [Validators.required, Validators.email,  Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
-          ContactNumber: ['',  Validators.required],
+          ContactNumber: ['', [ Validators.required,
+            Validators.pattern("^[0-9]*$"),
+            Validators.minLength(10), Validators.maxLength(12)]],
           Attending:['', Validators.required]
         }
       );
      }
      
+
     ngOnInit(): void {
       this.getRsvpList();
       this.isAddMode = true;
@@ -61,6 +64,15 @@ export class AppComponent {
           val.isSelected = false;
         }
       });
+    }
+
+    keyPress(event: any) {
+      const pattern = /[0-9\+\-\ ]/;
+   
+      let inputChar = String.fromCharCode(event.charCode);
+      if (event.keyCode != 8 && !pattern.test(inputChar)) {
+        event.preventDefault();
+      }
     }
 
     viewRsvp(item: any){
