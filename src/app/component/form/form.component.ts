@@ -130,7 +130,9 @@ private createRsvp() {
             //show success alert message
             this.notifyService.showSuccess("Your response successfully saved !!",'Success')
             this.loading = false;
-            this.form.reset();
+
+            this.resetForm();
+
             this.emitService.callComponentMethod(true);
           },
           error: error => {
@@ -143,6 +145,13 @@ private createRsvp() {
  
 }
 
+resetForm(){
+  this.form.reset();
+  this.form.controls['Name'].setErrors(null);
+  this.form.controls['Email'].setErrors(null);
+  this.form.controls['ContactNumber'].setErrors(null);
+  this.form.controls['Attending'].setErrors(null);
+}
 
 responseSelected(item: any) {
   this.form.value.Attending = item?.Attending == "Yes" ? true : false
