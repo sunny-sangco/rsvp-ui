@@ -1,0 +1,9 @@
+main {
+    width: 40% !important;
+    margin: 0 auto;
+  }
+  .full-width {
+    margin-top: 50px;
+    margin-left: -33.33%;
+    margin-right: -33.33%;
+  }

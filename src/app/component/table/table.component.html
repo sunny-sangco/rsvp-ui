@@ -1,0 +1,33 @@
+<figure class="rsvp-card">
+  <div class="card">
+    <div class="card-header">
+      <h3>RSVP List</h3>
+    </div>
+    <div class="card-body">
+    <div style="overflow-x:auto;">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Contact Number</th>
+            <th>Response</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let dataItem of rsvpList">
+            <td>{{ dataItem.Name }}</td>
+            <td>{{ dataItem.Email }}</td>
+            <td>{{ dataItem.ContactNumber }}</td>
+            <td>{{ dataItem.Attending == true ? "Attending" : "Decline" }}</td>
+            <td>
+              <app-button class="btn-outline-dark" (btnClick)="view(dataItem)" text="View" ></app-button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+  </div>
+</figure>
